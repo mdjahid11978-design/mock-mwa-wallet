@@ -9,7 +9,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.security.keystore.UserNotAuthenticatedException
-import android.util.Base64
 import android.util.Log
 import androidx.biometric.BiometricPrompt
 import androidx.lifecycle.AndroidViewModel
@@ -404,17 +403,7 @@ class MobileWalletAdapterViewModel(application: Application) : AndroidViewModel(
 
     private suspend fun getKeypair(): AsymmetricCipherKeyPair {
         // first check if a private key was provided through local props
-        return BuildConfig.PRIVATE_KEY?.let { privateKey ->
-            val privateKeyRaw = try {
-                Base58.decode(privateKey)
-            } catch (_: Throwable) {
-                try {
-                    val standardBase64NoPadding = privateKey.replace("-", "+").replace("_", "/").trimEnd('=')
-                    Base64.decode(standardBase64NoPadding, Base64.NO_PADDING or Base64.NO_WRAP)
-                } catch (_: IllegalArgumentException) {
-                    throw IllegalArgumentException("could not decode provided private key from local props")
-                }
-            }
+        return LocalKeypair.getPrivateKey()?.let { privateKeyRaw ->
             val privateKeyParams = Ed25519PrivateKeyParameters(privateKeyRaw, 0)
             (getApplication<MwalletApplication>().keyRepository.getKeypair(privateKeyParams.generatePublicKey().encoded)
                 ?: AsymmetricCipherKeyPair(
