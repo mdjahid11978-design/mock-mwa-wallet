@@ -5,11 +5,11 @@
 package com.solana.mwallet
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.solana.mobilewalletadapter.walletlib.association.RemoteAssociationUri
 import com.solana.mwallet.databinding.ActivityMainBinding
 import com.solana.mwallet.usecase.UserAuthenticationUseCase
@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        viewBinding.publicKeyText.text = getPublicKeyText()
 
         viewBinding.button.setOnClickListener {
             UserAuthenticationUseCase.authenticate(this) { result , error ->
@@ -62,4 +64,9 @@ class MainActivity : AppCompatActivity() {
     private fun openBarcodeScanner() {
         startActivity(Intent(applicationContext, BarcodeScannerActivity::class.java))
     }
+
+    private fun getPublicKeyText(): String =
+        runCatching { LocalKeypair.getPublicKey() }.getOrNull()
+            ?.let { "Public key: $it" }
+            ?: "Public key not configured"
 }
