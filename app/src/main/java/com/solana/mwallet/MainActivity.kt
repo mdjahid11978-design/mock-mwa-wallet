@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        viewBinding.titleText.text = "Name: ${BuildConfig.WALLET_NAME}"
         viewBinding.publicKeyText.text = getPublicKeyText()
 
         viewBinding.button.setOnClickListener {
@@ -67,6 +68,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun getPublicKeyText(): String =
         runCatching { LocalKeypair.getPublicKey() }.getOrNull()
-            ?.let { "Public key: $it" }
-            ?: "Public key not configured"
+            ?.let { "Address: $it" }
+            ?: "Address not configured"
 }

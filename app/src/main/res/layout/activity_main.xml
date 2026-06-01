@@ -14,11 +14,11 @@
         android:id="@+id/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_hello_world"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Name: wallet name" />
 
     <TextView
         android:id="@+id/public_key_text"
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_text"
-        tools:text="Public key: 11111111111111111111111111111111" />
+        tools:text="Address: 11111111111111111111111111111111" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"

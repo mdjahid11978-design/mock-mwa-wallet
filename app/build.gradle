@@ -30,10 +30,12 @@ android {
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        def privateKey = properties.getProperty('privateKey')
         def blowfishApiKey = properties.getProperty('blowfishApiKey')
-        buildConfigField "String", "PRIVATE_KEY", privateKey ? "\"$privateKey\"" : "null"
+        def privateKey = properties.getProperty('privateKey')
+        def walletName = properties.getProperty('walletName')
         buildConfigField "String", "BLOWFISH_API_KEY", blowfishApiKey ? "\"$blowfishApiKey\"" : "null"
+        buildConfigField "String", "PRIVATE_KEY", privateKey ? "\"$privateKey\"" : "null"
+        buildConfigField "String", "WALLET_NAME", walletName ? "\"$walletName\"" : "\"mwallet\""
     }
 
     testOptions {

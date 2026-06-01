@@ -56,6 +56,18 @@ This should be a private key that is strictly used for development purposes.
 
 3. Now, when you connect to the wallet, it will authorize and sign transactions with the imported private key.
 
+### Set the wallet name
+
+By default, Mock MWA Wallet presents itself as `mwallet`.
+
+In `mock-mwa-wallet/local.properties`, you can configure the wallet name:
+
+```
+walletName=some.skr
+```
+
+Rebuild and install the app for the new wallet name to take effect.
+
 ### Authenticating on an emulator
 
 You can add Device Authentication on an emulator, just like on a physical device. 

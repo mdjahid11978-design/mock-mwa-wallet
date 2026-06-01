@@ -5,11 +5,12 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.solana.mwallet.BuildConfig
 
 object UserAuthenticationUseCase {
 
     private val promptInfo: BiometricPrompt.PromptInfo = BiometricPrompt.PromptInfo.Builder()
-        .setTitle("Log in to mwallet")
+        .setTitle("Log in to ${BuildConfig.WALLET_NAME}")
         .setSubtitle("Log in securely access your accounts")
         .setAllowedAuthenticators(Authenticators.BIOMETRIC_STRONG or Authenticators.DEVICE_CREDENTIAL)
         .build()

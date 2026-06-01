@@ -5,9 +5,6 @@
 <resources>
     <string name="app_name">Mock MWA Wallet</string>
 
-    <!-- Main activity strings -->
-    <string name="label_hello_world">I\'m a wallet!</string>
-
     <!-- Authorize dapp fragment strings -->
     <string name="label_authorize_dapp">Authorize dapp</string>
     <string name="label_public_address_not_configured">Public address not configured</string>

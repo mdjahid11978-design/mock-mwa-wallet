@@ -39,6 +39,7 @@ class MobileWalletAdapterViewModel(application: Application) : AndroidViewModel(
     private var scenario: Scenario? = null
 
     private val walletIconUri = Uri.parse(application.getString(R.string.wallet_icon_uri))
+    private val walletName = BuildConfig.WALLET_NAME
 
     private val scanTransactionsUseCase = ScanTransactionsUseCase(
         viewModelScope,
@@ -79,7 +80,7 @@ class MobileWalletAdapterViewModel(application: Application) : AndroidViewModel(
                     ProtocolContract.FEATURE_ID_SIGN_IN_WITH_SOLANA
                 )
             ),
-            AuthIssuerConfig("mwallet"),
+            AuthIssuerConfig(walletName),
             MobileWalletAdapterScenarioCallbacks()
         ).also { it.start() }
 
@@ -112,7 +113,7 @@ class MobileWalletAdapterViewModel(application: Application) : AndroidViewModel(
                     return@launch
                 }.public as Ed25519PublicKeyParameters
                 Log.d(TAG, "authorizeDapp: Got keypair successfully")
-                val account = buildAccount(publicKey.encoded, "mwallet",
+                val account = buildAccount(publicKey.encoded, walletName,
                     chains = arrayOf(request.request.chain),
                     features = arrayOf(
                         ProtocolContract.FEATURE_ID_SIGN_TRANSACTIONS,
@@ -186,7 +187,7 @@ class MobileWalletAdapterViewModel(application: Application) : AndroidViewModel(
                 val signInResult = SignInResult(publicKey.encoded,
                     siwsMessage.encodeToByteArray(), signResult.signature, "ed25519")
 
-                val account = buildAccount(publicKey.encoded, "mwallet")
+                val account = buildAccount(publicKey.encoded, walletName)
                 // Get the current request from state (may have been updated by verification callback)
                 val currentRequest = _mobileWalletAdapterServiceEvents.value
                 if (currentRequest is MobileWalletAdapterServiceRequest.SignIn &&
